@@ -1,5 +1,3 @@
-<!-- TODO: fill in START HERE guide -->
-
 # 🚀 START HERE: GITHUB PROJECT TEMPLATE
 
 Welcome to the **GITHUB PROJECT TEMPLATE**. This scaffold helps you launch any project with a production-ready structure, best practices, multi-language support, and automation included from the start.
@@ -22,6 +20,7 @@ Welcome to the **GITHUB PROJECT TEMPLATE**. This scaffold helps you launch any p
 | `.husky/`, `python/.pre-commit-config.yaml` | ⚠️ | Pre-commit hooks (edit with care) |
 | `Makefile`, `Dockerfile`, `docker-compose.yml` | ⚠️ | Build/deploy automation |
 | `CODEOWNERS`, `SECURITY.md`, etc. | ⚠️ | Project meta/configuration |
+| `wordpress/`           | ✅             | WordPress Docker, custom plugins/themes, and uploads |
 
 **Legend:**
 - ✅ = Safe to edit for your project needs
@@ -51,7 +50,29 @@ This will:
 - **Internationalization (i18n):** Sample translations and workflow ([i18n/locales/](i18n/locales/), [i18n-sample.yml](.github/workflows/i18n-sample.yml)).
 - **Telemetry Opt-In:** Explicit opt-in for anonymous usage analytics ([TELEMETRY_OPT_IN.md](TELEMETRY_OPT_IN.md), [telemetry-optin.yml](.github/workflows/telemetry-optin.yml)).
 
-## 📦 Step 2: Development Tasks
+## 📰 Step 2a: Setup WordPress Service
+
+If you have included the WordPress scaffold in the `wordpress/` folder, follow these steps to configure and start it:
+
+1. Define environment variables in your `.env` or platform dashboard:
+   - `WORDPRESS_DB_HOST`
+   - `WORDPRESS_DB_NAME`
+   - `WORDPRESS_DB_USER`
+   - `WORDPRESS_DB_PASSWORD`
+2. Build and run the container locally (or deploy on your hosting platform):
+   ```bash
+   cd wordpress
+   docker build -t project-wordpress .
+   docker run -d -p 8080:80 \
+     -e WORDPRESS_DB_HOST=$WORDPRESS_DB_HOST \
+     -e WORDPRESS_DB_NAME=$WORDPRESS_DB_NAME \
+     -e WORDPRESS_DB_USER=$WORDPRESS_DB_USER \
+     -e WORDPRESS_DB_PASSWORD=$WORDPRESS_DB_PASSWORD \
+     project-wordpress
+   ```
+3. Open `http://localhost:8080/wp-admin` in your browser and complete the WordPress installation.
+
+## 📦 Step 3: Development Tasks
 
 | Task              | Command                         |
 |-------------------|----------------------------------|
@@ -62,7 +83,7 @@ This will:
 
 ---
 
-## 🛠️ Step 3: Release and Changelog Automation
+## 🛠️ Step 4: Release and Changelog Automation
 
 To create a new release:
 
@@ -77,7 +98,7 @@ This script will:
 
 ---
 
-## 📓 Step 4: Project Notes with Obsidian
+## 📓 Step 5: Project Notes with Obsidian
 
 To use the built-in Obsidian vault:
 1. Launch Obsidian
