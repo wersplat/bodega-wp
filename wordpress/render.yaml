@@ -1,0 +1,13 @@
+- type: web
+  name: wordpress
+  env: docker
+  dockerfilePath: ./wordpress/Dockerfile
+  envVars:
+    - key: WORDPRESS_DB_HOST
+      value: <mysql-host>
+    - key: WORDPRESS_DB_NAME
+      value: <db-name>
+    - key: WORDPRESS_DB_USER
+      value: <db-user>
+    - key: WORDPRESS_DB_PASSWORD
+      value: <db-password>

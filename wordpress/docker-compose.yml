@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  wordpress:
+    build: .
+    container_name: wp-app
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    ports:
+      - "8080:80"
+    # Uncomment if you want to use the official image instead of your Dockerfile
+    # image: wordpress:latest
+
+volumes:
+  db_data: 
