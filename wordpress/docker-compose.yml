@@ -1,17 +1,29 @@
-version: '3.8'
 services:
   wordpress:
-    build: .
+    image: wordpress:latest
     container_name: wp-app
     restart: unless-stopped
     env_file:
-      - ../.env
+      - .env
     volumes:
       - ./wp-content:/var/www/html/wp-content
+      - ./99-upload-size.ini:/usr/local/etc/php/conf.d/99-upload-size.ini
     ports:
       - "8080:80"
-    # Uncomment if you want to use the official image instead of your Dockerfile
-    # image: wordpress:latest
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: wp-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bodegawp
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: SuperSecurePassword123
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - db_data:/var/lib/mysql
 
 volumes:
-  db_data: 
+  db_data:

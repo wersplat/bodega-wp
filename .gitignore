@@ -23,6 +23,7 @@ pip-delete-this-directory.txt
 .venv/
 .env.local
 .env.*.local
+.env.prod
 
 # Editor directories and files
 .vscode/
