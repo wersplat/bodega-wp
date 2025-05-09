@@ -1,4 +1,6 @@
+version: '3.8'
 services:
+<<<<<<< Updated upstream
   mariadb:
     image: docker.io/bitnami/mariadb:10.6
     volumes:
@@ -8,6 +10,36 @@ services:
       - MARIADB_DATABASE=${MARIADB_DATABASE}
       - MARIADB_USER=${MARIADB_USER}
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+=======
+  db:
+    image: mysql:8.0
+    container_name: wp-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: "${WORDPRESS_DB_NAME}"
+      MYSQL_USER:     "${WORDPRESS_DB_USER}"
+      MYSQL_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wp-app
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    restart: unless-stopped
+>>>>>>> Stashed changes
 
   wordpress:
     image: docker.io/bitnami/wordpress-nginx:latest     # ← switch to the NGINX bundle
