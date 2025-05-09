@@ -1,29 +1,29 @@
 services:
-  wordpress:
-    image: wordpress:latest
-    container_name: wp-app
-    restart: unless-stopped
-    env_file:
-      - .env
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
     volumes:
-      - ./wp-content:/var/www/html/wp-content
-      - ./99-upload-size.ini:/usr/local/etc/php/conf.d/99-upload-size.ini
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-
-  db:
-    image: mysql:5.7
-    container_name: wp-db
-    restart: unless-stopped
+      - mariadb_data:/bitnami/mariadb
     environment:
-      MYSQL_DATABASE: bodegawp
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: SuperSecurePassword123
-      MYSQL_ROOT_PASSWORD: rootpass
-    volumes:
-      - db_data:/var/lib/mysql
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 
+  wordpress:
+    image: docker.io/bitnami/wordpress-nginx:latest     # ← switch to the NGINX bundle
+    ports:
+      - "80:8080"                                        # maps host 80 → container 8080
+      - "443:8443"                                       # if you later add SSL
+    volumes:
+      - wordpress_data:/bitnami/wordpress
+    depends_on:
+      - mariadb
+    environment:
+      - WORDPRESS_DATABASE_HOST=mariadb
+      - WORDPRESS_DATABASE_PORT_NUMBER=3306
+      - WORDPRESS_DATABASE_USER=${MARIADB_USER}
+      - WORDPRESS_DATABASE_NAME=${MARIADB_DATABASE}
+      - WORDPRESS_DATABASE_PASSWORD=${MARIADB_PASSWORD}
 volumes:
-  db_data:
+  mariadb_data:
+  wordpress_data:
