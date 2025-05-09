@@ -1,6 +1,7 @@
 version: '3.8'
 services:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   mariadb:
     image: docker.io/bitnami/mariadb:10.6
     volumes:
@@ -11,6 +12,8 @@ services:
       - MARIADB_USER=${MARIADB_USER}
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
 =======
+=======
+>>>>>>> Stashed changes
   db:
     image: mysql:8.0
     container_name: wp-db
@@ -39,6 +42,9 @@ services:
     volumes:
       - ./wp-content:/var/www/html/wp-content
     restart: unless-stopped
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   wordpress:
