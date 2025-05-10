@@ -19,7 +19,7 @@ services:
         sync: false # Set in Render dashboard
     # If your image is private, configure registry authentication in Render dashboard
 
-  - type: worker
+  - type: web
     name: mariadb
     runtime: image
     plan: starter
