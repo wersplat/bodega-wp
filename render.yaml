@@ -1,41 +1,40 @@
 services:
-  - type: web
-    name: wordpress
-    runtime: image
-    plan: starter
-    region: virginia
-    image:
-      url: ghcr.io/wersplat/wordpress-nginx:latest
-    envVars:
-      - key: WORDPRESS_DATABASE_HOST
-        value: mariadb
-      - key: WORDPRESS_DATABASE_PORT_NUMBER
-        value: 3306
-      - key: WORDPRESS_DATABASE_USER
-        sync: false # Set in Render dashboard
-      - key: WORDPRESS_DATABASE_NAME
-        sync: false # Set in Render dashboard
-      - key: WORDPRESS_DATABASE_PASSWORD
-        sync: false # Set in Render dashboard
-    # If your image is private, configure registry authentication in Render dashboard
-
-  - type: web
+  - type: pserv
     name: mariadb
     runtime: image
     plan: starter
     region: virginia
     image:
       url: ghcr.io/wersplat/mariadb:10.6
+    port: 3306
     envVars:
       - key: MARIADB_ROOT_PASSWORD
-        sync: false # Set in Render dashboard
+        sync: false
       - key: MARIADB_DATABASE
-        sync: false # Set in Render dashboard
+        sync: false
       - key: MARIADB_USER
-        sync: false # Set in Render dashboard
+        sync: false
       - key: MARIADB_PASSWORD
-        sync: false # Set in Render dashboard
-    # No public ports; only accessible by other Render services
+        sync: false
+    disk:
+      sizeGB: 10
+      mountPath: /var/lib/mysql
 
-# Note: Render does not support Docker volumes. For production, use managed databases for persistence.
-# If your images are private, see: https://render.com/docs/private-docker-registry 
+  - type: web
+    name: wordpress
+    runtime: image
+    plan: starter
+    region: virginia
+    dependsOn:
+      - mariadb
+    image:
+      url: ghcr.io/wersplat/wordpress-nginx:latest
+    envVars:
+      - key: WORDPRESS_DATABASE_HOST
+        value: mariadb:3306
+      - key: WORDPRESS_DATABASE_USER
+        sync: false
+      - key: WORDPRESS_DATABASE_NAME
+        sync: false
+      - key: WORDPRESS_DATABASE_PASSWORD
+        sync: false
