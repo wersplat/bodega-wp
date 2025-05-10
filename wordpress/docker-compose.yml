@@ -1,9 +1,6 @@
-version: '3.8'
 services:
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   mariadb:
-    image: docker.io/bitnami/mariadb:10.6
+    image: ghcr.io/wersplat/mariadb:10.6
     volumes:
       - mariadb_data:/bitnami/mariadb
     environment:
@@ -11,47 +8,12 @@ services:
       - MARIADB_DATABASE=${MARIADB_DATABASE}
       - MARIADB_USER=${MARIADB_USER}
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-=======
-=======
->>>>>>> Stashed changes
-  db:
-    image: mysql:8.0
-    container_name: wp-db
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      MYSQL_DATABASE: "${WORDPRESS_DB_NAME}"
-      MYSQL_USER:     "${WORDPRESS_DB_USER}"
-      MYSQL_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
-      MYSQL_ROOT_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
-    volumes:
-      - db_data:/var/lib/mysql
 
   wordpress:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: wp-app
-    depends_on:
-      - db
+    image: ghcr.io/wersplat/wordpress-nginx:latest
     ports:
-      - "80:80"
-    env_file:
-      - .env
-    volumes:
-      - ./wp-content:/var/www/html/wp-content
-    restart: unless-stopped
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-  wordpress:
-    image: docker.io/bitnami/wordpress-nginx:latest     # ← switch to the NGINX bundle
-    ports:
-      - "80:8080"                                        # maps host 80 → container 8080
-      - "443:8443"                                       # if you later add SSL
+      - "80:8080"
+      - "443:8443"
     volumes:
       - wordpress_data:/bitnami/wordpress
     depends_on:
@@ -62,6 +24,8 @@ services:
       - WORDPRESS_DATABASE_USER=${MARIADB_USER}
       - WORDPRESS_DATABASE_NAME=${MARIADB_DATABASE}
       - WORDPRESS_DATABASE_PASSWORD=${MARIADB_PASSWORD}
+
 volumes:
   mariadb_data:
   wordpress_data:
+
