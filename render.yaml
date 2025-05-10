@@ -3,6 +3,7 @@ services:
     name: wordpress
     runtime: image
     plan: starter
+    region: virginia
     image:
       url: ghcr.io/wersplat/wordpress-nginx:latest
     envVars:
@@ -22,6 +23,7 @@ services:
     name: mariadb
     runtime: image
     plan: starter
+    region: virginia
     image:
       url: ghcr.io/wersplat/mariadb:10.6
     envVars:
