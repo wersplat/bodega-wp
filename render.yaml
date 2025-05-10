@@ -6,7 +6,6 @@ services:
     region: virginia
     image:
       url: ghcr.io/wersplat/mariadb:10.6
-    port: 3306
     envVars:
       - key: MARIADB_ROOT_PASSWORD
         sync: false
@@ -17,6 +16,7 @@ services:
       - key: MARIADB_PASSWORD
         sync: false
     disk:
+      name: data
       sizeGB: 10
       mountPath: /var/lib/mysql
 
@@ -25,13 +25,11 @@ services:
     runtime: image
     plan: starter
     region: virginia
-    dependsOn:
-      - mariadb
     image:
       url: ghcr.io/wersplat/wordpress-nginx:latest
     envVars:
       - key: WORDPRESS_DATABASE_HOST
-        value: mariadb:3306
+        value: mariadb
       - key: WORDPRESS_DATABASE_USER
         sync: false
       - key: WORDPRESS_DATABASE_NAME
