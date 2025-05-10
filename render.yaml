@@ -1,7 +1,7 @@
 services:
   - type: web
     name: wordpress
-    env: docker
+    runtime: docker
     plan: standard
     image:
       url: ghcr.io/wersplat/wordpress-nginx:latest
@@ -16,13 +16,11 @@ services:
         sync: false # Set in Render dashboard
       - key: WORDPRESS_DATABASE_PASSWORD
         sync: false # Set in Render dashboard
-    ports:
-      - 8080 # Render will map this to a public URL
     # If your image is private, configure registry authentication in Render dashboard
 
-  - type: private
+  - type: background
     name: mariadb
-    env: docker
+    runtime: docker
     plan: standard
     image:
       url: ghcr.io/wersplat/mariadb:10.6
