@@ -1,7 +1,7 @@
 services:
   - type: web
     name: wordpress
-    runtime: image
+    runtime: docker
     plan: standard
     image:
       url: ghcr.io/wersplat/wordpress-nginx:latest
