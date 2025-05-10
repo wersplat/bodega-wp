@@ -1,7 +1,7 @@
 services:
   - type: web
     name: wordpress
-    runtime: docker
+    runtime: image
     plan: standard
     image:
       url: ghcr.io/wersplat/wordpress-nginx:latest
@@ -18,9 +18,9 @@ services:
         sync: false # Set in Render dashboard
     # If your image is private, configure registry authentication in Render dashboard
 
-  - type: worker
+  - type: pserv
     name: mariadb
-    runtime: docker
+    runtime: image
     plan: standard
     image:
       url: ghcr.io/wersplat/mariadb:10.6
