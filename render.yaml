@@ -18,7 +18,7 @@ services:
         sync: false # Set in Render dashboard
     # If your image is private, configure registry authentication in Render dashboard
 
-  - type: background
+  - type: worker
     name: mariadb
     runtime: docker
     plan: standard
