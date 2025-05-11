@@ -4,7 +4,7 @@ FROM bitnami/wordpress-nginx:6.8.1-debian-12-r1
 USER root
 
 # Install Python, pip, and create a virtual environment
-RUN install_packages python3 python3-pip && \
+RUN install_packages python3 python3-pip python3-venv && \
     python3 -m venv /opt/bitnami/venv && \
     /opt/bitnami/venv/bin/pip install --no-cache-dir sqlalchemy pymysql supabase python-dotenv
 
