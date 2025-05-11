@@ -49,7 +49,6 @@ obsidian/.obsidian/
 
 # Docker
 docker-compose.override.yml
-Dockerfile*
 
 # system files
 Thumbs.db

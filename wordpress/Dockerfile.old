@@ -1,0 +1,4 @@
+FROM wordpress:latest
+COPY ./wp-content /var/www/html/wp-content
+COPY 99-upload-size.ini /usr/local/etc/php/conf.d/
+# Add any custom configuration or plugins here if needed 
